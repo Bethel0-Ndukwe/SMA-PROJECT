@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Superior Mind Academy CBT Portal</title>
+<link rel="stylesheet" href="css1/styles.css">
+
+</head>
+<body>
+
+<header>
+<h1>SUPERIOR MIND ACADEMY</h1>
+<p>Official CBT Examination Portal</p>
+</header>
+
+<!-- HOME -->
+<section id="home">
+<h2>Select School Level</h2>
+
+<div class="grid">
+ <button onclick="selectLevel('primary')">Primary School</button>
+ <button onclick="selectLevel('jss')">Junior Secondary School</button>
+</div>
+</section>
+
+<!-- CLASS DROPDOWN -->
+<section id="classSelector" class="hidden">
+
+<button class="back-btn" onclick="goHome()">⬅ Back</button>
+<h2 id="levelTitle"></h2>
+
+<select id="classDropdown"></select>
+<br><br>
+<button onclick="openSubjects()">Proceed to Subjects</button>
+
+</section>
+
+<!-- SUBJECTS -->
+<section id="subjectPage" class="hidden">
+
+<button class="back-btn" onclick="backToClasses()">⬅ Choose Another Class</button>
+<h2 id="subjectTitle"></h2>
+
+<div id="subjects" class="grid"></div>
+
+</section>
+
+<footer>
+  <p><strong>Superior Mind Academy</strong></p>
+  <p>Excellence Through Knowledge</p>
+  <p>CBT Platform | Niger, Nigeria</p>
+  <p>&copy; 2025 SMA – All Rights Reserved</p>
+</footer>
+
+<script>
+
+// ======== DATA =========
+
+const subjects = {
+
+primary:{
+  "Primary 1": [
+   "Algebra","Arithmetics","Statistics",
+   "Mensurations Ans Geometry",
+   "Verbal Reasoning","Comprehension","Grammar",
+   "Creative art","French","Nature Studies", "Phonics","Religion","Creative Writing","Digital Technology",
+   "Literature","Prevocational Studies",
+   "Basic Science","Social Studies",
+   "Computer"
+  ],
+
+  "Primary 2":[
+  "Algebra","Arithmetics","Statistics",
+  "Mensurations Ans Geometry",
+  "Verbal Reasoning","Comprehension","Grammar",
+  "Creative art","French","Nature Studies", "Phonics","Religion","Creative Writing","Digital Technology",
+  "Literature","Prevocational Studies",
+  "Basic Science","Social Studies",
+  "Computer"
+  ],
+
+  "Primary 3":[
+  "Algebra","Arithmetics","Statistics",
+  "Mensurations Ans Geometry",
+  "Verbal Reasoning","Comprehension","Grammar",
+  "Creative art","French","Nature Studies", "Phonics","Religion","Creative Writing","Digital Technology",
+  "Literature","Prevocational Studies",
+  "Basic Science","Social Studies",
+  "Computer"
+  ],
+
+  "Primary 4":[
+  "Algebra","Arithmetics","Statistics",
+  "Mensurations Ans Geometry",
+  "Verbal Reasoning","Comprehension","Grammar",
+  "Creative art","French","Nature Studies", "Phonics","Religion","Creative Writing","Digital Technology",
+  "Literature","Prevocational Studies",
+  "Basic Science","Social Studies",
+  "Computer"
+  ],
+
+  "Primary 5":[
+  "Algebra","Arithmetics","Statistics",
+  "Mensurations Ans Geometry",
+  "Verbal Reasoning","Comprehension","Grammar",
+  "Creative art","French","Nature Studies", "Phonics","Religion","Creative Writing","Digital Technology",
+  "Literature","Prevocational Studies",
+  "Basic Science","Social Studies",
+  "Computer"
+  ]
+},
+
+jss:{
+ "JSS 1":[
+  "Mathematics","English","Basic Science",
+  "Basic Technology","Business Studies","Computer",
+
+  {
+   name:"Home Economics",
+   link:"https://presenter.jivrus.com/p/1s9jsTa-LZri9BdpPLpdlLFz9RJhi13TZXZ7c8ds1MWM"
+  },
+
+  "French","Civic"
+ ],
+
+ "JSS 2":[
+  "Mathematics","English","Basic Science",
+  "Basic Technology","Business Studies","Computer",
+  "Home Economics","French","Civic"
+ ],
+
+ "JSS 3":[
+  "Mathematics","English","Basic Science",
+  "Basic Technology","Business Studies","Computer",
+  "Home Economics","French","Civic"
+ ]
+}
+
+};
+
+// ======== VARIABLES =========
+
+let selectedLevel = '';
+let selectedClass = '';
+
+// ======== FUNCTIONS =========
+
+// Show class dropdown
+function selectLevel(level){
+
+ selectedLevel = level;
+
+ home.classList.add("hidden");
+ classSelector.classList.remove("hidden");
+
+ levelTitle.textContent =
+   level === "primary" ? "Primary School Classes" :
+                         "Junior Secondary School Classes";
+
+ populateClasses();
+}
+
+// Populate class dropdown
+function populateClasses(){
+
+ const dropdown = classDropdown;
+ dropdown.innerHTML = '';
+
+ Object.keys(subjects[selectedLevel]).forEach(cls => {
+   const opt = document.createElement("option");
+   opt.text = cls;
+   dropdown.add(opt);
+ });
+}
+
+// Go to subjects page
+function openSubjects(){
+
+ selectedClass = classDropdown.value;
+
+ classSelector.classList.add("hidden");
+ subjectPage.classList.remove("hidden");
+
+ subjectTitle.textContent =
+   `${selectedClass} Subjects`;
+
+ showSubjects();
+}
+
+// Display subject buttons
+function showSubjects(){
+
+ subjectsBox = subjects;
+
+ subjectsDiv = document.getElementById("subjects");
+ subjectsDiv.innerHTML = '';
+
+ subjects[selectedLevel][selectedClass].forEach(sub=>{
+
+   let btn = document.createElement("button");
+
+   // subject with link
+   if(typeof sub === "object"){
+      btn.textContent = sub.name;
+      btn.onclick = ()=> window.open(sub.link);
+   }
+
+   // internal subject
+   else{
+      btn.textContent = sub;
+      btn.onclick = ()=> alert(`${sub} exam will open here soon.`);
+   }
+
+   subjectsDiv.appendChild(btn);
+ });
+}
+
+// Navigation
+
+function goHome(){
+ classSelector.classList.add("hidden");
+ home.classList.remove("hidden");
+}
+
+function backToClasses(){
+ subjectPage.classList.add("hidden");
+ classSelector.classList.remove("hidden");
+}
+
+</script>
+
+</body>
+</html>
